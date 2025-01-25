@@ -1,0 +1,41 @@
+The purpose of this module is to connect SuiteCRM and Frontaccounting.
+
+See Mantis 2533
+http://fhsws002.ksfraser.com/infra/software-devel/mantis/view.php?id=2533
+
+Accounts <-> Customers 
+(Account - nested) <-> Branches 
+Contacts <-> Contacts
+Products <-> Items
+Product Category <-> Item Category
+Quotes <-> Sales Quotes
+Invoices <-> Sales Invoice
+ ?? <-> Payment
+ ?? <-> Credit Note
+Contract <->  ??
+Project <->   ??
+Project <->   Work Order
+Opportunities <-> ??
+Leads <-> ??
+Campaigns <-> ??
+Targets <-> ?? (Dimensions??)
+Cases <-> ??
+Tasks
+Notes <-> Attachments?
+Calls
+Meetings
+Emails
+Documents
+Employee <-> Sales Person
+Employee <-> Employee (HR Module)
+ ?? <->  Deparment
+ ?? <-> Supplier
+ ?? <-> Purchase Order
+ ?? <-> Supplier Invoice
+ ?? <-> Supplier Payment
+ ?? <-> Supplier Credit Note
+ ?? <-> Inventory Location
+ ?? <-> Items Movement
+ ?? <-> Foreign Codes
+ ?? <-> Sales Kits
+ ?? <-> Reorder Levels  (Workflow trigger?)
