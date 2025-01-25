@@ -1,0 +1,160 @@
+<?php
+
+
+
+declare(strict_types=1);
+global $path_to_root;
+if( strlen( $path_to_root ) < 5 )
+ 	$path_to_root = dirname( __FILE__ ) . "/../../../";
+use PHPUnit\Framework\TestCase;
+require_once( dirname( __FILE__ ) .  '/../class.name_value_list.php' );
+
+/*
+global $db_connections;	//FA uses for DB stuff
+global $_SESSION;
+$_SESSION['wa_current_user'] = new stdClass();
+$_SESSION['wa_current_user']->company = 1;
+$_SESSION["wa_current_user"]->cur_con = 1;
+$db_connections[$_SESSION["wa_current_user"]->cur_con]['tbpref'] = '1_';
+$db_connections[1]['tbpref'] = '1_';
+ */
+
+//If asserts fail returning type NULL that is because the field
+//is PROTECTED or PRIVATE and therefore can't be accessed!!
+class name_value_listTest extends TestCase
+{
+	protected $shared_var;
+	protected $shared_val;
+	function __construct()
+	{
+		parent::__construct();
+		$this->shared_var =  'pub_unittestvar';
+		$this->shared_val = '1';
+		
+	}
+	public function testInstanceOf(): name_value_list
+	{
+		$o = new name_value_list();
+		$this->assertInstanceOf( name_value_list::class, $o );
+		return $o;
+	}
+	/**
+	 * @depends testInstanceOf
+	 */
+	public function testConstructorValues( $o )
+	{
+		//Constructor creates an array.
+		$this->assertIsArray( $o->nvl );
+
+		//$this->assertSame( $o->vendor, "name_value_list" );	//var not protected/private
+		//$this->assertTrue( is_object( $o->get( 'wc' ) ) );
+		//$this->assertSame( $o->get( 'client' ), $this );
+		//Constructor also calls add_submodules
+	}
+	
+	/**
+	 * @depends testInstanceOf
+	 */
+	public function testadd_nvl( $o )
+	{
+		$name = "name";
+		$value = "value";
+		$o->add_nvl( $name, $value );
+		$this->assertIsArray( $o->nvl );
+		$this->assertSame( $o->get_value( 0 ), $value );
+		$this->assertSame( $o->nvl[0]['name']), $name );
+		$this->expectException( $o->get_value( 1 ) );
+		return $o;
+	}
+	/**
+	 * @depends testadd_nvl
+	 */
+	public function testadd_nvl( $o )
+	{
+		$name = "name";
+		$value = "value";
+		$o->add_nvl( $name, $value );
+		$this->assertIsArray( $o->nvl );
+		$this->assertSame( $o->get_value( 0 ), $value );
+		$this->assertSame( $o->nvl[0]['name']), $name );
+		$this->expectException( $o->get_value( 1 ) );
+	}
+
+
+
+
+	/**
+	 * @depends testInstanceOf
+	 */
+	/*** send_search is private function so can't be tested.
+	public function testsend_search( $o )
+	{
+		//->notify is inherited from generic_fa_interface.
+		$this->expectException( $o->send_search( "test", null ) );	//search_array can't be set so exception
+		$this->expectException( $o->send_search( "test", $this ) );	//search_array isn't set so exception
+		$this->search_array = array();
+		$this->assertIsArray( $o->send_search( "test", $this ) );		//search_array is empty so returned array should also be.
+		$this->search_array = array( 'client' );
+		$this->assertIsArray( $o->send_search( "test", $this ) );		//search_array is not empty so there MIGHT be a return array
+
+		$this->expectException( $o->send( "test", "test", null ) );	//Bad endpoint so I expect the WC library to throw an exception
+		$this->assertIsArray( $o->send( "product",array( "test" ), $this ) );	//Should run send_new_test
+		$o->set( 'id', 1 );
+		$this->assertIsArray( $o->send( "product",array( "test" ), $this ) );	//Should run send_update
+	}
+	 */
+
+	/**
+	 * @depends testInstanceOf
+	 */
+	public function testsend_new_test( $o )
+	{
+		//->notify is inherited from generic_fa_interface.
+		$this->expectException( $o->send_new_test( "test", null ) );	//search_array can't be set so exception
+		$this->expectException( $o->send_new_test( "test", $this ) );	//search_array isn't set so exception
+		$this->search_array = array();
+		$this->assertIsArray( $o->send_new_test( "test", $this ) );		//search_array is empty so returned array should also be.
+		$this->search_array = array( 'client' );
+		$this->assertIsArray( $o->send_new_test( "test", $this ) );		//search_array is not empty so there MIGHT be a return array
+
+		$this->expectException( $o->send( "test", "test", null ) );	//Bad endpoint so I expect the WC library to throw an exception
+		$this->assertIsArray( $o->send( "product",array( "test" ), $this ) );	//Should run send_new_test
+		$o->set( 'id', 1 );
+		$this->assertIsArray( $o->send( "product",array( "test" ), $this ) );	//Should run send_update
+	}
+	
+	/**
+	 * @ depends testInstanceOf
+	 */
+	//public function testinit_tables_complete_form( $o )
+	//{
+		//uses woo_category
+		//calls 		$this->fix_stock_id_size();
+		//calls 		$this->create_table_woo_prod_variable_master();
+		//calls 		$this->create_table_woo_prod_variable_sku_combos();
+		//calls 		$this->create_table_woo_prod_variable_sku_full();
+		//calls 		$this->create_table_woo_prod_variable_child();
+		//calls 		$this->create_table_woo_prod_variable_variables();
+		//calls 		$this->create_table_woo_prod_variables_values();
+		//uses woo_orders($this->woo_server, $this->woo_ck, $this->woo_cs, null, $this );
+		//calls 		$this->create_table_woo_prod_variable_master();
+		//calls 		$this->create_table_woo_prod_variable_sku_combos();
+		//calls 		$this->create_table_woo_prod_variable_sku_full();
+		//calls 		$this->create_table_woo_prod_variable_child();
+		//calls 		$this->create_table_woo_prod_variable_variables();
+		//calls 		$this->create_table_woo_prod_variables_values();
+		//uses woo_orders($this->woo_server, $this->woo_ck, $this->woo_cs, null, $this );
+		//uses woo($this->woo_server, $this->woo_ck, $this->woo_cs, null, $this );
+		//uses ksf_qoh( KSF_QOH_PREFS );
+		//uses woo_prod_variation_attributes($this->woo_server, $this->woo_ck, $this->woo_cs, null, $this );
+		//uses woo_categories_xref($this->woo_server, $this->woo_ck, $this->woo_cs, null, $this );
+		//uses woo_coupons($this->woo_server, $this->woo_ck, $this->woo_cs, null, $this );
+	//}
+	
+	public function notify( $v1 = "", $v2 = "", $v3 = "" )
+	{
+		return "";
+	}
+}
+
+?>
