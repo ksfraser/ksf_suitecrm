@@ -1,48 +1,88 @@
 <?php
 
-require_once( 'class.suitecrm.php' );
+namespace App\Models;
 
-//http://support.sugarcrm.com/Documentation/Sugar_Developer/Sugar_Developer_Guide_6.5/Application_Framework/Web_Services/Examples/REST/PHP/Creating_or_Updating_a_Record/
+use Exception;
 
-class suitecrm_quote extends suitecrm
+/**
+ * Model class for handling SuiteCRM Quotes.
+ */
+class QuotesModel
 {
-	protected $id;
-	protected $name;
-	protected $date_entered;
-	protected $date_modified;
-	protected $description;
-	protected $deleted;
-	protected $approval_issue;
-	protected $billing_account;
-	protected $billing_contact;
-i	protected $billing_address_street;	//!< text
-	protected $billing_address_city;	//!< text
-	protected $billing_address_postalcode;	//!< text
-	protected $billing_address_state;	//!< text
-	protected $billing_address_country;	//!< text
+    protected $attributes = [];
 
-	protected $shipping_address_street;	//!< text
-	protected $shipping_address_city;	//!< text
-	protected $shipping_address_postalcode;	//!< text
-	protected $shipping_address_state;	//!< text
-	protected $shipping_address_country;	//!< text
+    /**
+     * Constructor to initialize attributes.
+     *
+     * @param array $attributes Key-value pairs of attributes.
+     */
+    public function __construct(array $attributes = [])
+    {
+        $this->attributes = $attributes;
+    }
 
+    /**
+     * Set an attribute value.
+     *
+     * @param string $key Attribute name.
+     * @param mixed $value Attribute value.
+     */
+    public function set($key, $value)
+    {
+        $this->attributes[$key] = $value;
+    }
 
-	protected $team_count;
-	protected $team_name;
-	protected $date_qupte_expected_closed;
-	protected $quote_type;
-	protected $quote_stage;
-	protected $qupte_num;
-	protected $currency_id;
-	protected $subtotal;
-	protected $subtotal_usdollar;
-	//protected $quote_url;	//url in Suite, need to convert for send/update/get
-	//protected $contact;
+    /**
+     * Get an attribute value.
+     *
+     * @param string $key Attribute name.
+     * @return mixed|null Attribute value or null if not set.
+     */
+    public function get($key)
+    {
+        return $this->attributes[$key] ?? null;
+    }
 
+    /**
+     * Create a new Quote record.
+     *
+     * @throws Exception If the record is not created.
+     */
+    public function create()
+    {
+        // Simulate record creation logic.
+        $this->attributes['id'] = uniqid(); // Example ID generation.
 
-	function __construct( $debug_level = PEAR_LOG_DEBUG, $param_arr )
-	{
-		parent::__construct( $debug_level, $param_arr );
-		$this->set( "module_name", "Quotes" );
-	}
+        if (!isset($this->attributes['id'])) {
+            throw new Exception("Record not created!");
+        }
+    }
+}
+
+/**
+ * Controller class for managing SuiteCRM Quotes operations.
+ */
+class QuotesController
+{
+    protected $model;
+
+    /**
+     * Constructor to initialize the model.
+     *
+     * @param QuotesModel $model The model instance.
+     */
+    public function __construct(QuotesModel $model)
+    {
+        $this->model = $model;
+    }
+
+    /**
+     * Handle the creation of a new Quote.
+     *
+     * @return void
+     */
+    public function createQuote()
+    {
+        $this->model->create();
+    }
+}

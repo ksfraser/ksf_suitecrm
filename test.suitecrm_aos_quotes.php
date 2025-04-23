@@ -55,4 +55,27 @@ catch( Exception $e )
 	throw new Exception( "This code is for testing.  Why isn't it commented out? :: " . $e->getMessage() );
 }
 
+use PHPUnit\Framework\TestCase;
+use App\Models\AOSQuotesModel;
+use App\Models\AOSQuotesController;
+
+/**
+ * PHPUnit test class for AOSQuotes.
+ */
+class AOSQuotesTest extends TestCase
+{
+    /**
+     * Test the creation of an AOS Quote.
+     */
+    public function testCreateQuote()
+    {
+        $model = new AOSQuotesModel();
+        $controller = new AOSQuotesController($model);
+
+        $controller->createQuote();
+
+        $this->assertNotNull($model->get('id'), 'Quote ID should not be null after creation.');
+    }
+}
+
 

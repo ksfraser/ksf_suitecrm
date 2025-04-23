@@ -118,3 +118,27 @@ catch( Exception $e )
 //	throw new Exception( "This code is for testing.  Why isn't it commented out? :: " . $e->getMessage() );
 }
 
+use PHPUnit\Framework\TestCase;
+use App\Models\UsersModel;
+use App\Models\UsersController;
+
+/**
+ * PHPUnit test class for Users.
+ */
+class UsersTest extends TestCase
+{
+    /**
+     * Test the creation of a User.
+     */
+    public function testCreateUser()
+    {
+        $model = new UsersModel(['user_name' => 'test_user']);
+        $controller = new UsersController($model);
+
+        $controller->createUser();
+
+        $this->assertNotNull($model->get('id'), 'User ID should not be null after creation.');
+        $this->assertEquals('test_user', $model->get('user_name'), 'User name should match the input.');
+    }
+}
+
