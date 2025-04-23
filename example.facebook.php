@@ -3,37 +3,65 @@ https://github.com/facebook/facebook-php-sdk/tree/master/examples
 
 /**********************************/
 <?php
-    $user = $facebook->getUser();
+use Mouf\Html\HtmlElement\HtmlString;
+use Mouf\Html\HtmlElement\HtmlTag;
 
-    if ($user) {
-        $user_profile = $facebook->api('/me');
-        $friends = $facebook->api('/me/friends');
+$user = $facebook->getUser();
 
-        echo '<ul>';
-        foreach ($friends["data"] as $value) {
-            echo '<li>';
-            echo '<div class="pic">';
-            echo '<img src="https://graph.facebook.com/' . $value["id"] . '/picture"/>';
-            echo '</div>';
-            echo '<div class="picName">'.$value["name"].'</div>'; 
-            echo '</li>';
-        }
-        echo '</ul>';
+if ($user) {
+    $user_profile = $facebook->api('/me');
+    $friends = $facebook->api('/me/friends');
+
+    $ul = new HtmlTag('ul');
+
+    foreach ($friends["data"] as $value) {
+        $li = new HtmlTag('li');
+
+        $divPic = new HtmlTag('div', [
+            'class' => 'pic'
+        ]);
+        $img = new HtmlTag('img', [
+            'src' => 'https://graph.facebook.com/' . $value["id"] . '/picture'
+        ]);
+        $divPic->addChild($img);
+
+        $divName = new HtmlTag('div', [
+            'class' => 'picName'
+        ], new HtmlString($value["name"]));
+
+        $li->addChild($divPic);
+        $li->addChild($divName);
+        $ul->addChild($li);
     }
 
+    echo $ul->toHtml();
+}
 
 /*************************/
-<body>
+$body = new HtmlTag('body');
+$h1 = new HtmlTag('h1', [], new HtmlString('Login to FaceBook using My Web Application'));
+$div = new HtmlTag('div');
 
-<h1>Login to FaceBook using My Web Application</h1>
+$loginButton = new HtmlTag('button', [
+    'id' => 'login'
+], new HtmlString('Log In'));
+$logoutButton = new HtmlTag('button', [
+    'id' => 'logout'
+], new HtmlString('Log Out'));
+$disconnectButton = new HtmlTag('button', [
+    'id' => 'disconnect'
+], new HtmlString('Disconnect'));
 
-<div>
-  <button id="login">Log In</button>
-  <button id="logout">Log Out</button>
+$div->addChild($loginButton);
+$div->addChild($logoutButton);
+$div->addChild($disconnectButton);
 
-  <button id="disconnect">Disconnect</button>
+$body->addChild($h1);
+$body->addChild($div);
 
-</div>
+// Render the body
+echo $body->toHtml();
+?>
 
 <div id="user-info" style="display: none;"></div>
 
@@ -119,8 +147,6 @@ https://github.com/facebook/facebook-php-sdk/tree/master/examples
 
 </script>
 
-</body>
-
 /**************************************/
 You can get email hashes of user's friends via FQL (field "email_hashes" of table "user").
 
@@ -141,4 +167,4 @@ returns:
 }
 You can iterate on your emails and search whether they registered on Facebook.
 
-/**********************************/
+/**************************************/

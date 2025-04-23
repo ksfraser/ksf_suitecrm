@@ -6,4 +6,8 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Mouf\\Utils\\Value' => array($vendorDir . '/mouf/utils.value.value-interface/src'),
+    'Mouf\\Utils\\Action' => array($vendorDir . '/mouf/html.htmlelement/src', $vendorDir . '/mouf/utils.action.action-interface/src'),
+    'Mouf\\Html\\Tags' => array($vendorDir . '/mouf/html.tags/src'),
+    'Mouf\\Html\\HtmlElement' => array($vendorDir . '/mouf/html.htmlelement/src'),
 );

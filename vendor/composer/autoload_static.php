@@ -8,33 +8,84 @@ class ComposerStaticInitfb3d2dd81295d211a3793bd6f56b525d
 {
     public static $files = array (
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
+        'b33e3d135e5d9e47d845c576147bda89' => __DIR__ . '/..' . '/php-di/php-di/src/functions.php',
+        '9b38cf48e83f5d8f60375221cd213eee' => __DIR__ . '/..' . '/phpstan/phpstan/bootstrap.php',
         'ec07570ca5a812141189b1fa81503674' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Assert/Functions.php',
     );
 
     public static $prefixLengthsPsr4 = array (
         'P' => 
         array (
+            'Psr\\Container\\' => 14,
             'PhpParser\\' => 10,
+        ),
+        'L' => 
+        array (
+            'Laravel\\SerializableClosure\\' => 28,
+        ),
+        'I' => 
+        array (
+            'Invoker\\' => 8,
         ),
         'D' => 
         array (
             'DeepCopy\\' => 9,
+            'DI\\' => 3,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
+        'Psr\\Container\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/container/src',
+        ),
         'PhpParser\\' => 
         array (
             0 => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser',
+        ),
+        'Laravel\\SerializableClosure\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/laravel/serializable-closure/src',
+        ),
+        'Invoker\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/php-di/invoker/src',
         ),
         'DeepCopy\\' => 
         array (
             0 => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy',
         ),
+        'DI\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/php-di/php-di/src',
+        ),
     );
 
     public static $fallbackDirsPsr4 = array (
         0 => __DIR__ . '/../..' . '/',
+    );
+
+    public static $prefixesPsr0 = array (
+        'M' => 
+        array (
+            'Mouf\\Utils\\Value' => 
+            array (
+                0 => __DIR__ . '/..' . '/mouf/utils.value.value-interface/src',
+            ),
+            'Mouf\\Utils\\Action' => 
+            array (
+                0 => __DIR__ . '/..' . '/mouf/html.htmlelement/src',
+                1 => __DIR__ . '/..' . '/mouf/utils.action.action-interface/src',
+            ),
+            'Mouf\\Html\\Tags' => 
+            array (
+                0 => __DIR__ . '/..' . '/mouf/html.tags/src',
+            ),
+            'Mouf\\Html\\HtmlElement' => 
+            array (
+                0 => __DIR__ . '/..' . '/mouf/html.htmlelement/src',
+            ),
+        ),
     );
 
     public static $classMap = array (
@@ -1221,6 +1272,7 @@ class ComposerStaticInitfb3d2dd81295d211a3793bd6f56b525d
             $loader->prefixLengthsPsr4 = ComposerStaticInitfb3d2dd81295d211a3793bd6f56b525d::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInitfb3d2dd81295d211a3793bd6f56b525d::$prefixDirsPsr4;
             $loader->fallbackDirsPsr4 = ComposerStaticInitfb3d2dd81295d211a3793bd6f56b525d::$fallbackDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInitfb3d2dd81295d211a3793bd6f56b525d::$prefixesPsr0;
             $loader->classMap = ComposerStaticInitfb3d2dd81295d211a3793bd6f56b525d::$classMap;
 
         }, null, ClassLoader::class);
