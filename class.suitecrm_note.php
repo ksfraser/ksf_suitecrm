@@ -17,7 +17,7 @@ require_once( 'class.suitecrm_base.php' );
  * except for the Module name.
  *
  * */
-class suitecrm_note extends suitecrm_base
+class SuitecrmNote extends suitecrmBase
 {
 	var $id;
 	protected $note_id;	//returned as ID from a search

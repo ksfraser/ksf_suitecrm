@@ -9,7 +9,7 @@ require_once( 'class.suitecrm_base.php' );
 *	20231120 This creates a product!
 ****************************************/
 
-class suitecrm_aos_products extends suitecrm_base
+class SuitecrmAosProducts extends suitecrmBase
 {
 	protected $name;
 	protected $description;

@@ -186,7 +186,7 @@ class cloneSiteA2B extends origin
 	}
 	function create_note( $name, $text, $related_module = null, $related_id = null )
 	{
-		require_once( 'class.suitecrm_note.php' );
+		require_once( 'class.suitecrmNote.php' );
 		echo __METHOD__ . "::" . __LINE__ . "\n";
 		$data = array(
 			"name" => $name,
@@ -195,7 +195,7 @@ class cloneSiteA2B extends origin
 			"related_module_id" => $related_id );
 		$this->connectionB->set( "module_name", "Notes" );
 
-		$note = new suitecrm_note( $data );
+		$note = new suitecrmNote( $data );
 		$note->prepare();
 		$this->connectionB->set( "nvl", $note->get( "nvl" ) );
 		$ret = $this->connectionB->set_entry();
@@ -209,7 +209,7 @@ class cloneSiteA2B extends origin
 	}
 	function create_task( $data )
 	{
-		$task = new suitecrm_task( $data );
+		$task = new suitecrmTask( $data );
 		$task->prepare();
 		$this->connectionB->set( "nvl", $task->get( "nvl" ) );
 		$ret = $this->connectionB->set_entry();

@@ -4,7 +4,7 @@ require_once( 'class.suitecrm_base.php' );
 
 //http://support.sugarcrm.com/Documentation/Sugar_Developer/Sugar_Developer_Guide_6.5/Application_Framework/Web_Services/Examples/REST/PHP/Creating_or_Updating_a_Record/
 
-class suitecrm_aos_products_quotes extends suitecrm_base
+class SuitecrmAosProductsQuotes extends suitecrmBase
 {
 	//Var's from modules/AOS_Products_Quotes/AOS_Products_Quotes_sugar.php
 	protected $name;

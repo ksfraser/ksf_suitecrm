@@ -13,7 +13,7 @@ require_once( 'class.suitecrm_base.php' );
  *
  * */
 
-class suitecrm_documents extends suitecrm_base
+class SuitecrmDocuments extends suitecrmBase
 {
 	var $id;
 	//Search returns 4 fields

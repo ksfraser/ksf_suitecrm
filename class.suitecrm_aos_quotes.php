@@ -7,7 +7,7 @@ use Exception;
 /**
  * Model class for handling AOS Quotes in SuiteCRM.
  */
-class AOSQuotesModel
+class SuitecrmAosQuotes extends suitecrmBase
 {
     protected $attributes = [];
 
@@ -69,9 +69,9 @@ class AOSQuotesController
     /**
      * Constructor to initialize the model.
      *
-     * @param AOSQuotesModel $model The model instance.
+     * @param SuitecrmAosQuotes $model The model instance.
      */
-    public function __construct(AOSQuotesModel $model)
+    public function __construct(SuitecrmAosQuotes $model)
     {
         $this->model = $model;
     }

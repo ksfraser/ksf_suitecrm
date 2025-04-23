@@ -1,13 +1,13 @@
 <?php
 
 require_once( 'conf.url.php' );
-require_once( 'class.suitecrm_aos_quotes.php' );
+require_once( 'class.suitecrmAosQuotes.php' );
 
 //http://support.sugarcrm.com/Documentation/Sugar_Developer/Sugar_Developer_Guide_6.5/Application_Framework/Web_Services/Examples/REST/PHP/Creating_or_Updating_a_Record/
 
 
 
-class test_suitecrm extends suitecrm_aos_quotes
+class TestSuitecrm extends suitecrmAosQuotes
 {
 
 	function __construct( $debug_level = PEAR_LOG_DEBUG, $param_arr )
@@ -32,7 +32,7 @@ class test_suitecrm extends suitecrm_aos_quotes
 }
 
 $params = array( "url"=> $url, "username" => $username, "password" =>$password, "module_name" => "login" );
-$test = new test_suitecrm( null, $params );
+$test = new TestSuitecrm( null, $params );
 $test->login();
 /**/
 $res = $test->search2("%");

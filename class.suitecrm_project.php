@@ -4,7 +4,7 @@ require_once( 'class.suitecrm.php' );
 
 //http://support.sugarcrm.com/Documentation/Sugar_Developer/Sugar_Developer_Guide_6.5/Application_Framework/Web_Services/Examples/REST/PHP/Creating_or_Updating_a_Record/
 
-class suitecrm_project extends suitecrm
+class SuitecrmProject extends suitecrm
 {
 	protected $id;
 	protected $name;
@@ -46,3 +46,4 @@ i	protected $billing_address_street;	//!< text
 		parent::__construct( $debug_level, $param_arr );
 		$this->set( "module_name", "Project" );
 	}
+}

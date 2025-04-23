@@ -7,7 +7,7 @@ use Exception;
 /**
  * Model class for handling SuiteCRM Users.
  */
-class UsersModel
+class SuitecrmUsers extends suitecrmBase
 {
     protected $attributes = [];
 

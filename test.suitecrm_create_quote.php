@@ -1,16 +1,16 @@
 <?php
 
 require_once( 'conf.url.php' );
-require_once( 'class.suitecrm_aos_quotes.php' );
-require_once( 'class.suitecrm_aos_products.php' );
-require_once( 'class.suitecrm_aos_products_quotes.php' );
-require_once( 'class.suitecrm_productbundles.php' );
+require_once( 'class.suitecrmAosQuotes.php' );
+require_once( 'class.suitecrmAosProducts.php' );
+require_once( 'class.suitecrmAosProductsQuotes.php' );
+require_once( 'class.suitecrmProductBundles.php' );
 
 //http://support.sugarcrm.com/Documentation/Sugar_Developer/Sugar_Developer_Guide_6.5/Application_Framework/Web_Services/Examples/REST/PHP/Creating_or_Updating_a_Record/
 
 
 
-class test_quotes extends suitecrm_aos_quotes
+class TestQuotes extends suitecrmAosQuotes
 {
 
 	function __construct( $debug_level = PEAR_LOG_DEBUG, $param_arr )
@@ -33,7 +33,7 @@ class test_quotes extends suitecrm_aos_quotes
 		$this->set( "assigned_user_id", $this->get( 'user_id' ) );
 	}
 }
-class test_product extends suitecrm_aos_products
+class TestProduct extends suitecrmAosProducts
 {
 	function __construct( $debug_level = PEAR_LOG_DEBUG, $param_arr )
 	{
@@ -52,7 +52,7 @@ class test_product extends suitecrm_aos_products
 		//$this->set( "assigned_user_id", $this->get( 'user_id' ) );
 	}
 }
-class test_products_quotes extends suitecrm_aos_products_quotes
+class TestProductsQuotes extends suitecrmAosProductsQuotes
 {
 	function __construct( $debug_level = PEAR_LOG_DEBUG, $param_arr )
 	{
@@ -72,7 +72,7 @@ class test_products_quotes extends suitecrm_aos_products_quotes
 		//$this->set( "assigned_user_id", $this->get( 'user_id' ) );
 	}
 }
-class test_productbundles extends suitecrm_productbundles
+class TestProductBundles extends suitecrmProductBundles
 {
 	function set_test_vars()
 	{
@@ -96,7 +96,7 @@ class test_productbundles extends suitecrm_productbundles
 }
 
 $params = array( "url"=> $url, "username" => $username, "password" =>$password, "module_name" => "login" );
-$test = new test_quotes( null, $params );
+$test = new TestQuotes( null, $params );
 $test->login();
 /** /
 $res = $test->search2("%74241");
@@ -112,7 +112,7 @@ try
 	$params["parent_id"] = $test->get( "id" );
 	$params["debug_level"] = $test->get( "debug_level" );
 //This is creating a product.  Instead we should be searching for an existing product...
-	$tpq = new test_products_quotes( null, $params );
+	$tpq = new TestProductsQuotes( null, $params );
 	$tpq->login();
 	//$res = $tpq->search2("%74241");
 //	var_dump( $res );
@@ -124,7 +124,7 @@ try
 	var_dump( $nvl );
 	 /**/
 	//$tpq->unset( "name_value_list" );
-	$tpq2 = new test_products_quotes( null, $params );
+	$tpq2 = new TestProductsQuotes( null, $params );
 	$tpq2->login();
 	$tpq2->set_test_vars();
 	$tpq2->set( "name", "Product " . date( 'YmdHis' ) );
@@ -136,7 +136,7 @@ try
 	var_dump( $nvl );
 	 /**/
 
-	$tpq3 = new test_products_quotes( null, $params );
+	$tpq3 = new TestProductsQuotes( null, $params );
 	$tpq3->login();
 	$tpq3->set_test_vars();
 	$tpq3->set( "name", "Product " . date( 'YmdHis' ) );
@@ -148,7 +148,7 @@ try
 	var_dump( $nvl );
 	/**/
 
-		$tpq4 = new test_products_quotes( null, $params );
+		$tpq4 = new TestProductsQuotes( null, $params );
 	$tpq4->login();
 	$tpq4->set_test_vars();
 	$tpq4->set( "name", "Product " . date( 'YmdHis' ) );
@@ -164,7 +164,7 @@ try
 	 /**/
 
 
-		$tpq5 = new test_products_quotes( null, $params );
+		$tpq5 = new TestProductsQuotes( null, $params );
 	$tpq5->login();
 	$tpq5->set_test_vars();
 	$tpq5->set( "name", "Product " . date( 'YmdHis' ) );

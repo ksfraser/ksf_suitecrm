@@ -4,7 +4,7 @@ require_once( 'class.suitecrm.php' );
 
 //http://support.sugarcrm.com/Documentation/Sugar_Developer/Sugar_Developer_Guide_6.5/Application_Framework/Web_Services/Examples/REST/PHP/Creating_or_Updating_a_Record/
 
-class suitecrm_opportunities extends suitecrm
+class SuitecrmOpportunities extends suitecrm
 {
 	protected $id;
 	protected $name;
@@ -15,7 +15,7 @@ class suitecrm_opportunities extends suitecrm
 	protected $approval_issue;
 	protected $billing_account;
 	protected $billing_contact;
-i	protected $billing_address_street;	//!< text
+	protected $billing_address_street;	//!< text
 	protected $billing_address_city;	//!< text
 	protected $billing_address_postalcode;	//!< text
 	protected $billing_address_state;	//!< text
@@ -46,3 +46,4 @@ i	protected $billing_address_street;	//!< text
 		$this->set( "module_name", "Opportunities" );
 	}
 
+}

@@ -7,7 +7,7 @@ use Exception;
 /**
  * Model class for handling SuiteCRM Tasks.
  */
-class TasksModel
+class SuitecrmTasks extends suitecrmBase
 {
     protected $attributes = [];
 
@@ -69,9 +69,9 @@ class TasksController
     /**
      * Constructor to initialize the model.
      *
-     * @param TasksModel $model The model instance.
+     * @param SuitecrmTasks $model The model instance.
      */
-    public function __construct(TasksModel $model)
+    public function __construct(SuitecrmTasks $model)
     {
         $this->model = $model;
     }

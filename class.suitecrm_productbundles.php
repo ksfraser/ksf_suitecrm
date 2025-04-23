@@ -9,7 +9,7 @@ require_once( 'class.suitecrm_base.php' );
  *
  * */
 
-class suitecrm_productbundles extends suitecrm_base
+class SuitecrmProductBundles extends suitecrmBase
 {
 	protected $name;
 	protected $bundle_stage;

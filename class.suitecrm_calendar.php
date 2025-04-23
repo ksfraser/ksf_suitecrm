@@ -11,7 +11,7 @@
 
 require_once( 'class.suitecrm_base.php' );	//class suitecrm
 
-class suitecrm_calendar extends suitecrm_base
+class SuitecrmCalendar extends suitecrmBase
 {
 	protected $date_start;
 	protected $duration_minutes;

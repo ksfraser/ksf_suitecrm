@@ -7,7 +7,7 @@ use Exception;
 /**
  * Model class for handling SuiteCRM Quotes.
  */
-class QuotesModel
+class SuitecrmQuote extends suitecrmBase
 {
     protected $attributes = [];
 

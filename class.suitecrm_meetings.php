@@ -12,7 +12,7 @@ require_once( 'class.suitecrm_base.php' );
 ******************************************************/
 
 
-class suitecrm_meetings extends suitecrm_base
+class SuitecrmMeetings extends suitecrmBase
 {
 //	var $id;
 //	protected $meeting_id;

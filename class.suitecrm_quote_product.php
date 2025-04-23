@@ -4,7 +4,7 @@ require_once( 'class.suitecrm_product.php' );
 
 //http://support.sugarcrm.com/Documentation/Sugar_Developer/Sugar_Developer_Guide_6.5/Application_Framework/Web_Services/Examples/REST/PHP/Creating_or_Updating_a_Record/
 
-class suitecrm_quote_product extends suitecrm_product
+class SuitecrmQuoteProduct extends suitecrm_product
 {
 	protected $id;
 	protected $name;
