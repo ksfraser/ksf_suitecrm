@@ -12,5 +12,5 @@ return array(
     'Invoker\\' => array($vendorDir . '/php-di/invoker/src'),
     'DeepCopy\\' => array($vendorDir . '/myclabs/deep-copy/src/DeepCopy'),
     'DI\\' => array($vendorDir . '/php-di/php-di/src'),
-    '' => array($baseDir . '/'),
+    'App\\' => array($baseDir . '/src'),
 );

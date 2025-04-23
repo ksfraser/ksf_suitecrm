@@ -32,6 +32,10 @@ class ComposerStaticInitfb3d2dd81295d211a3793bd6f56b525d
             'DeepCopy\\' => 9,
             'DI\\' => 3,
         ),
+        'A' => 
+        array (
+            'App\\' => 4,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -59,10 +63,10 @@ class ComposerStaticInitfb3d2dd81295d211a3793bd6f56b525d
         array (
             0 => __DIR__ . '/..' . '/php-di/php-di/src',
         ),
-    );
-
-    public static $fallbackDirsPsr4 = array (
-        0 => __DIR__ . '/../..' . '/',
+        'App\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src',
+        ),
     );
 
     public static $prefixesPsr0 = array (
@@ -1271,7 +1275,6 @@ class ComposerStaticInitfb3d2dd81295d211a3793bd6f56b525d
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInitfb3d2dd81295d211a3793bd6f56b525d::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInitfb3d2dd81295d211a3793bd6f56b525d::$prefixDirsPsr4;
-            $loader->fallbackDirsPsr4 = ComposerStaticInitfb3d2dd81295d211a3793bd6f56b525d::$fallbackDirsPsr4;
             $loader->prefixesPsr0 = ComposerStaticInitfb3d2dd81295d211a3793bd6f56b525d::$prefixesPsr0;
             $loader->classMap = ComposerStaticInitfb3d2dd81295d211a3793bd6f56b525d::$classMap;
 

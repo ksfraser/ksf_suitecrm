@@ -37,33 +37,19 @@ class suitecrm_alerts extends suitecrm_base
 	protected $jjwg_maps_lat_c;		//!< float
 	protected $jjwg_maps_lng_c;		//!< float
 	
-    function __construct($debug_level = PEAR_LOG_DEBUG, $param_arr )
-    {
-	    parent::__construct( $debug_level, $param_arr );
-	    $this->set( "module_name", "Alerts" );
+    function __construct($debugLevel = PEAR_LOG_DEBUG, $paramArr) {
+	    parent::__construct($debugLevel, $paramArr);
+	    $this->set("moduleName", "Alerts");
     }
-	function create()
-	{
-		parent::create();		
-		/*
-		echo "\r\n";
-		echo "*****************************";
-			echo "\r\n";
-		echo "Document created: \n\r";
-		var_dump( $this->result );
-		echo "\r\n";
-		echo "*****************************";
-		echo "\r\n";
-		/**/
-		 /*
 
-		echo "\r\n";
-		echo "*****************************";
-		echo "\r\n";
-		 /**/
-	
-	}
+    public function set($key, $value) {
+        $this->$key = $value;
+    }
 
+	function create() {
+        return parent::create();		
+		// Placeholder for additional create logic
+    }
 }
 
 

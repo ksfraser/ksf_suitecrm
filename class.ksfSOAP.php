@@ -18,6 +18,19 @@
  * Generic class
  * ***********************/
 
+use Exception;
+use SoapClient;
+
+if (!defined('KSF_FIELD_NOT_SET')) {
+    define('KSF_FIELD_NOT_SET', 1); // Placeholder value
+}
+if (!defined('KSF_VALUE_NOT_SET')) {
+    define('KSF_VALUE_NOT_SET', 2); // Placeholder value
+}
+if (!defined('KSF_RESULT_NOT_SET')) {
+    define('KSF_RESULT_NOT_SET', 3); // Placeholder value
+}
+
 require_once( '../ksf_modules_common/class.origin.php' );
 require_once( "class.name_value_list.php" );
 
@@ -28,208 +41,122 @@ require_once( "class.name_value_list.php" );
  * *************************************************/
 class ksfSOAP extends origin
 {
-	protected $soapClient;
-	protected $username;
-	protected $password;
-	protected $url;
-	protected $soapLoginTime;
-	protected $soap_auth_array;
-	protected $retryCount;
-	protected $result;
-	protected $appname;
-	var $soapParams;		//!<array
-	//protected $soapCredential;	//replaced by password
-	protected $session_id;
-	var $debug_level;
+    protected $soapClient;
+    protected $username;
+    protected $password;
+    protected $url;
+    protected $soapLoginTime;
+    protected $soapAuthArray;
+    protected $retryCount;
+    protected $result;
+    protected $appName;
+    protected $sessionId;
+    protected $debugLevel;
+    protected $soapParams; // Changed to protected
+    protected $moduleName;
+    protected $version;
 
-	function __construct()
-	{
-		parent::__construct();
-	    	$this->debug_level = 0;
-	    	$this->retryCount = 0;
-	    	$this->result = null;
-	    	$this->session_id = null;
-		$this->module_name = null;
-	}
-	/*********************************//**
-	 * Create a PHP Soap Client, using wsdl
-	 *
-	 * @param none
-	 * @return none 
-	 * ************************************/
-	function setSoapClient()
-	{
-		if( ! isset( $this->url ) )
-			throw new Exception( "Base SOAP URL must be set", KSF_FIELD_NOT_SET );
-	    $this->soapClient = new SoapClient($this->url . '?wsdl'); //Build in library
-	}
-	/*********************************//**
-	 * Build the auth array.  May be SuiteCRM specific
-	 *
-	 * @param none
-	 * @return array
-	 * ************************************/
-	function build_auth_array()
-	{
-		if( ! isset( $this->username ) )
-			throw new Exception( "SOAP username must be set", KSF_FIELD_NOT_SET );
-		if( ! isset( $this->password ) )
-			throw new Exception( "SOAP Password must be set", KSF_FIELD_NOT_SET );
-		$this->soap_auth_array = array(
-			'user_name' => $this->username,
-			'password' => $this->password );
-		if( isset( $this->version ) )
-			$this->soap_auth_array['version'] = $this->version;
-		return $this->soap_auth_array;
-	}
-	/*********************************//**
-	 * Reconnect.  May be SuiteCRM specific
-	 *
-	 * @param none
-	 * @return none 
-	 * ************************************/
-	function soapReconnect()
-	{
-		if( ! isset( $this->soapLoginTime ) )
-			throw new Exception( "SOAP Login time must be set.  Since it is done in Login, why are we here and it isnt?", KSF_FIELD_NOT_SET );
-		if (time() - $this->soapLoginTime > 600) // 10 minutes
-		{
-			try {
-				$this->soapLogin();
-			}
-			catch( Exception $e )
-			{
-				throw $e;
-			}
-		}
-	}
-	/*********************************//**
-	 * Login.  May be SuiteCRM specific
-	 *
-	 * @param none
-	 * @return string
-	 * ************************************/
-	function soapLogin()
-	{
-		if( ! isset( $this->appname ) )
-			throw new Exception( "SOAP App Name must be set or blank", KSF_FIELD_NOT_SET );
-		global $userGUID;
-	    	$this->setSoapClient();
-		if( ! isset( $this->soap_auth_array ) OR ! isset( $this->soap_auth_array['user_name'] ) )
-			$this->build_auth_array();
-		try {
-			$soapLogin = $this->soapClient->login( $this->soap_auth_array, $this->appname, array() );
-			$this->set( 'session_id', $soapLogin->id );
-			$this->soapLoginTime = time();
-			print "! Successful SOAP login id=" . $this->session_id  . " user=" . $this->soap_auth_array['user_name']. "\n";
-			return $this->session_id;
-		}
-		catch( SoapFault $e )
-		{
-			//TEST assumes these are NULL
-			//$this->set( 'session_id', 0 );
-			//$this->set( 'soapLoginTime', 0 );
-			throw $e;
-		}
-		catch( Exception $e )
-		{
-			//TEST assumes these are NULL
-			//$this->set( 'session_id', 0 );
-			//$this->set( 'soapLoginTime', 0 );
-			throw $e;
-		}
-	}
+    function __construct() {
+        parent::__construct();
+        $this->debugLevel = 0;
+        $this->retryCount = 0;
+        $this->result = null;
+        $this->sessionId = null;
+        $this->moduleName = null;
+    }
 
-	/*********************************//**
-	 * Logout.  May be SuiteCRM specific
-	 *
-	 * @param none
-	 * @return none 
-	 * ************************************/
-	function soapLogout()
-	{
-		$this->soapClient->logout(  $this->get( 'session_id' ) );
-		//$this->soapClient->logout( array( $this->get( 'session_id' ) ) );
-		unset( $this->session_id );
-		unset( $this->soapLoginTime );
-	}
-	/*********************************//**
-	 * Call a SOAP function.
-	 *
-	 * receiving NULL returns too :(
-	 *
-	 * @param operation string name of function to call
-	 * @return result stdClass of results from call
-	 * ************************************/
-	function soapCall( $operation )
-	{
-		try {
-			if( ! isset( $this->soapParams ) OR ! is_array( $this->soapParams ) )
-			{
-				throw new Exception( "SoapParams must be set", KSF_VALUE_NOT_SET );
-			}
-			//Getting an array to string conversion error on ->soapParams
-			print_r( $operation, true );
-			print_r( $this->soapParams, true );
-			$this->result = $this->soapClient->__soapCall( 	$operation, 
-									 $this->soapParams );
-									//json_encode( $this->soapParams ) );
-									//array( $this->soapParams ) );
-			//var_dump( $this->result );
-		} catch( SoapFault $e )
-		{
-			//Seeing an invalid session ID error.
-			print_r( $e->getCode(), true );
-			print_r( $e->getMessage(), true );
-			//print_r( $e->getTrace(), true );
-			throw $e;
-		} catch( Exception $e )
-		{
-			//Seeing an invalid session ID error.
-			throw $e;
-		}
-		//$result = $this->soapClient->call( $operation, $this->soapParams );
-		//
-		//if (isset($this->result->error) && $this->result->error['number'] == 10 && $this->retryCount < 5)
-		if (isset($this->result->error) )
-		{
-			$errno = $this->result->error['number'];
-			switch( $errno )
-			{
-				case 10:
-					if( $this->retryCount < 5 )
-					{
-						// Session lost, try to reconnect and retry
-						$this->soapReconnect();
-						$this->retryCount++;
-						$this->result = $this->soapCall($operation);
-						$this->retryCount = 0;
-					}
-					break;
-				default:
-					break;
-			}
-		}
-		//What about if retrycount, and/or errnum <>10
-		if( $this->result == null )
-		{
-			throw new Exception( "Why is result null?", KSF_RESULT_NOT_SET );
-		}
-		return $this->result;
-	}
-	/*********************************//**
-	 * Get the list of functions available.  May be SuiteCRM specific
-	 *
-	 * @param none
-	 * @return array
-	 * ************************************/
-	function  getFunctions()
-	{
-		//var_dump( $this->soapClient->__getFunctions() );
-		$funcs = $this->soapClient->__getFunctions();
-		return $funcs;
-	}
+    function setSoapClient() {
+        if (!isset($this->url)) {
+            throw new Exception("Base SOAP URL must be set", KSF_FIELD_NOT_SET);
+        }
+        $this->soapClient = new SoapClient($this->url . '?wsdl');
+    }
 
+    function buildAuthArray() {
+        if (!isset($this->username)) {
+            throw new Exception("SOAP username must be set", KSF_FIELD_NOT_SET);
+        }
+        if (!isset($this->password)) {
+            throw new Exception("SOAP Password must be set", KSF_FIELD_NOT_SET);
+        }
+        $this->soapAuthArray = [
+            'user_name' => $this->username,
+            'password' => $this->password
+        ];
+        if (isset($this->version)) {
+            $this->soapAuthArray['version'] = $this->version;
+        }
+        return $this->soapAuthArray;
+    }
+
+    function soapReconnect() {
+        if (!isset($this->soapLoginTime)) {
+            throw new Exception("SOAP Login time must be set.", KSF_FIELD_NOT_SET);
+        }
+        if (time() - $this->soapLoginTime > 600) {
+            try {
+                $this->soapLogin();
+            } catch (Exception $e) {
+                throw $e;
+            }
+        }
+    }
+
+    function soapLogin() {
+        if (!isset($this->appName)) {
+            throw new Exception("SOAP App Name must be set or blank", KSF_FIELD_NOT_SET);
+        }
+        $this->setSoapClient();
+        if (!isset($this->soapAuthArray) || !isset($this->soapAuthArray['user_name'])) {
+            $this->buildAuthArray();
+        }
+        try {
+            $soapLogin = $this->soapClient->login($this->soapAuthArray, $this->appName, []);
+            $this->sessionId = $soapLogin->id;
+            $this->soapLoginTime = time();
+            return $this->sessionId;
+        } catch (SoapFault $e) {
+            throw $e;
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+    function soapLogout() {
+        $this->soapClient->logout($this->sessionId);
+        unset($this->sessionId);
+        unset($this->soapLoginTime);
+    }
+
+    function soapCall($operation) {
+        try {
+            if (!isset($this->soapParams) || !is_array($this->soapParams)) {
+                throw new Exception("SoapParams must be set", KSF_VALUE_NOT_SET);
+            }
+            $this->result = $this->soapClient->__soapCall($operation, $this->soapParams);
+        } catch (SoapFault $e) {
+            throw $e;
+        } catch (Exception $e) {
+            throw $e;
+        }
+        if (isset($this->result->error)) {
+            $errno = $this->result->error['number'];
+            if ($errno === 10 && $this->retryCount < 5) {
+                $this->soapReconnect();
+                $this->retryCount++;
+                $this->result = $this->soapCall($operation);
+                $this->retryCount = 0;
+            }
+        }
+        if ($this->result === null) {
+            throw new Exception("Why is result null?", KSF_RESULT_NOT_SET);
+        }
+        return $this->result;
+    }
+
+    function getFunctions() {
+        return $this->soapClient->__getFunctions();
+    }
 }
 
 

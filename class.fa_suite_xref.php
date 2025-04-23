@@ -11,11 +11,11 @@ require_once( '../ksf_modules_common/class.table_interface.php' );
 *
 *
 */
-class fa_suite_xref extends table_interface
+class FaSuiteXref extends table_interface
 {
 
 
-	function define_table()
+	function defineTable()
 	{
 		/**
 		 * Moving back into ksf_suitecrm

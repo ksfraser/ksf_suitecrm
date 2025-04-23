@@ -44,26 +44,9 @@ class suitecrm_am_projecttemplates extends suitecrm_base
     }
 	function create()
 	{
-		parent::create();		
-		/*
-		echo "\r\n";
-		echo "*****************************";
-			echo "\r\n";
-		echo "Document created: \n\r";
-		var_dump( $this->result );
-		echo "\r\n";
-		echo "*****************************";
-		echo "\r\n";
-		/**/
-		 /*
-
-		echo "\r\n";
-		echo "*****************************";
-		echo "\r\n";
-		 /**/
-	
-	}
-
+return 		parent::create();		
+		// Placeholder for additional create logic
+    }
 }
 
 
