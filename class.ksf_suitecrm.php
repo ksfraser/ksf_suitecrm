@@ -122,7 +122,7 @@ $this->tabs[] = array( 'title' => 'Customer Imported from SuiteCRM', 'action' =>
 		$this->table_interface->table_details['primarykey'] = "id";
 	
 		//$this->table_interface->fields_array[] = array('name' => 'stock_id', 'label' => 'SKU', 'type' => $sidl, 'null' => 'NOT NULL',  'readwrite' => 'readwrite');
-		$sidl = 'varchar(' . STOCK_ID_LENGTH . ')';
+		//$sidl = 'varchar(' . STOCK_ID_LENGTH . ')';
 		$descl = 'varchar(' . DESCRIPTION_LENGTH . ')';
 
 		$this->table_interface->fields_array[] = array('name' => 'description', 'label' => 'Description', 'type' => $descl, 'null' => 'NOT NULL',  'readwrite' => 'readwrite' );

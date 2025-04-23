@@ -1,5 +1,6 @@
 <?php
 
+require_once 'Log.php'; // Include PEAR Log module
 require_once( 'class.suitecrm_base.php' );
 
 //http://support.sugarcrm.com/Documentation/Sugar_Developer/Sugar_Developer_Guide_6.5/Application_Framework/Web_Services/Examples/REST/PHP/Creating_or_Updating_a_Record/

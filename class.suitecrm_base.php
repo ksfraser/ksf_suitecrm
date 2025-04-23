@@ -1,18 +1,19 @@
 <?php
 
+require_once 'Log.php'; // Include PEAR Log module
 require_once( '../ksf_modules_common/class.origin.php' );
 require_once( 'class.suitecrm.php' );
 
 //http://support.sugarcrm.com/Documentation/Sugar_Developer/Sugar_Developer_Guide_6.5/Application_Framework/Web_Services/Examples/REST/PHP/Creating_or_Updating_a_Record/
 
-class suitecrm_base extends origin
+class SuiteCrmBase extends origin
 {
 	var $id;		//!< string should be a GUID  xxxxx-xxxxx-xxxxx
 	protected $suitecrm;	//!< class suitecrm (connector)
 	protected $url;		//!< string http://...
 	protected $password;	//!< string
 	protected $username;	//<! string
-	protected $user_id;	//<! string returned from SuiteCRM
+	protected $userId;	//<! string returned from SuiteCRM
 	protected $module_name;	//<! string Accounts/Leads/Contacts/Notes/...
 	protected $debug_level;
 	protected $loggedin;	//<! bool
@@ -82,7 +83,7 @@ class suitecrm_base extends origin
 			$this->suitecrm->login();
 			//If we made it this far our SuiteCRM class didn't throw an exception
 			$this->loggedin = true;
-			$this->set( "user_id", $this->suitecrm->get( "user_id" ) );
+			$this->set( "userId", $this->suitecrm->get( "user_id" ) );
 			//var_dump( $this->user_id );
 		} catch( Exception $e )
 		{

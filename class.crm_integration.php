@@ -52,7 +52,7 @@ class CrmIntegration extends generic_fa_interface {
             $sql .= $row['name'];
             $rowcount++;
         }
-        $sq( .= " from " .  $this->table_details['tablename'];
+        $sql .= " from " .  $this->table_details['tablename'];
         if( isset( $this->table_details['orderby'] ) )
             $sql .= " ORDER BY " . $this->table_details['orderby'];
 
